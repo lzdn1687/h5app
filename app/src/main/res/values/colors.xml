@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--云南三农网-->
+    <color name="ynsnw">#1E90FF</color>
+
+
+    <color name="colorPrimary">#FC5600</color>
+    <color name="colorPrimaryDark">#FC5600</color>
+    <color name="colorAccent">#FC5600</color>
+    <!--聚惠和成-->
+    <color name="jhhc">#FC5600</color>
+    <color name="jhhc_lt">#f7e1c0</color>
+
+</resources>
