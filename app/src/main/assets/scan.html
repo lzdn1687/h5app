@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>扫码</title>
+    <!--<script type="text/javascript" src="jquery-1.8.2.js"></script>-->
+
+
+    <style>
+
+
+        .wrapper{
+        	margin-top: 40px;
+        	text-align: center;
+        }
+
+    	.wrapper #scanButton{
+    		height: 80px;
+    		width: 80px;
+
+    	}
+
+    	.desc{
+    		text-align: center;
+    		font-size: 14px;
+    		color: darkgray;
+    	}
+
+    	#wxpay{
+    	    padding:10px;
+    	}
+
+    	#alipay{
+    	    padding:10px;
+    	}
+
+
+
+
+    </style>
+    <script type="text/javascript">
+        //扫描方法
+        function scan(){
+            //页面加载完成后，获取window.android属性
+            //获取客户端类型，如果是android，显示扫描按钮
+            if(window.android!=undefined){
+                window.android.scan(window.android.getClientType())
+            }
+        }
+
+        //微信支付
+        function wxpay(){
+            if(window.android!=undefined){
+                //传递订单等参数...
+                window.android.wxpay();
+            }
+        }
+
+        //支付宝支付
+        function alipay(){
+            if(window.android!=undefined){
+                //传递订单等参数...
+                window.android.alipay();
+            }
+        }
+
+
+
+
+    </script>
+
+</head>
+<body>
+<div class="wrapper">
+    <img src="scan.png" id="scanButton" onclick="scan()"/>
+</div>
+
+<div class="desc">点击扫描</div>
+
+<hr/>
+
+<center><h3>支付方式</h3></center>
+<div class="payments">
+    <!--<div id="wxpay" onclick="wxpay()">微信支付</div>-->
+    <!--<div id="alipay" onclick="alipay()">支付宝支付</div>-->
+    <a href="javascript:void(0)" onclick="wxpay()">
+        <div id="wxpay">微信支付</div>
+    </a>
+    <a href="javascript:void(0)" onclick="alipay()">
+        <div id="alipay">支付宝支付</div>
+    </a>
+</div>
+
+</body>
+</html>
