@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         //聚惠和成
-        applicationId "com.jhhc.android"
+        applicationId "com.kesitong.shop"
         //云南三农网
 //        applicationId "com.sannongwang.android"
         //易物乐

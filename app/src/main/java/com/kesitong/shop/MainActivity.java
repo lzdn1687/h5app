@@ -1,8 +1,6 @@
-package com.yiwule.android;
+package com.kesitong.shop;
 
-import android.Manifest;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        webView = (WebView) findViewById(R.id.wv);
-        pg1 = (ProgressBar) findViewById(R.id.progressBar1);
-        progress = (TextView) findViewById(R.id.progress);
+        setContentView(com.kesitong.shop.R.layout.activity_main);
+        webView = (WebView) findViewById(com.kesitong.shop.R.id.wv);
+        pg1 = (ProgressBar) findViewById(com.kesitong.shop.R.id.progressBar1);
+        progress = (TextView) findViewById(com.kesitong.shop.R.id.progress);
 
         initSettings();
         webView.addJavascriptInterface(this, "android");
