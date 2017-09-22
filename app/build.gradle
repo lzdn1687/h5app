@@ -50,4 +50,7 @@ dependencies {
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     //支付宝支付
     compile files('libs/alipaySdk-20170725.jar')
+    //okhttp
+    compile files('libs/okhttputils-2_6_2.jar')
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
 }

@@ -28,11 +28,15 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+
+import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -198,18 +202,44 @@ public class MainActivity extends AppCompatActivity {
         return "android";
     }
 
+    private void preWxpay(String money) {
+        OkHttpUtils
+                .post()
+                .url(Constants.WX_PAY_URL)
+                .addParams("money", money)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        Log.d(TAG, "onError: e = " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int i) {
+                        Log.d(TAG, "onResponse: response = " + response);
+                        doWxpay(response);
+                    }
+                });
+    }
+
 
     //微信支付
     @JavascriptInterface
-    public void wxpay() {
-//        Toast.makeText(this, "微信支付", Toast.LENGTH_SHORT).show();
-
+    public void wxpay(String money) {
+        Toast.makeText(this, "微信支付，金额：" + money, Toast.LENGTH_SHORT).show();
         // TODO: 2017/9/21 请求支付接口，得到所需参数
-        String content = "";
+        preWxpay(money);
+    }
+
+    /**
+     * 调用微信发起支付
+     * @param response
+     */
+    private void doWxpay(String response) {
         PayReq req = new PayReq();
 
         try {
-            JSONObject json = new JSONObject(content);
+            JSONObject json = new JSONObject(response);
             req.appId = json.getString("appid");
             req.partnerId = json.getString("partnerid");
             req.prepayId = json.getString("prepayid");

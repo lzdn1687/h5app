@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>扫码</title>
-    <!--<script type="text/javascript" src="jquery-1.8.2.js"></script>-->
+    <script type="text/javascript" src="jquery-1.8.2.js"></script>
 
 
     <style>
@@ -27,6 +27,10 @@
     		color: darkgray;
     	}
 
+    	#balance{
+    	    padding:10px;
+    	}
+
     	#wxpay{
     	    padding:10px;
     	}
@@ -34,6 +38,13 @@
     	#alipay{
     	    padding:10px;
     	}
+
+    	#money{
+    	    margin:10px;
+    	}
+
+
+
 
 
 
@@ -51,19 +62,35 @@
 
         //微信支付
         function wxpay(){
+            var money = $("#money").val();
+            money = $.trim(money);
+            if(money==""){
+                alert("请输入付款金额");
+                return
+            }
             if(window.android!=undefined){
                 //传递订单等参数...
-                window.android.wxpay();
+                window.android.wxpay(money);
             }
         }
 
         //支付宝支付
         function alipay(){
+            var money = $("#money").val();
+            money = $.trim(money);
+            if(money==""){
+                alert("请输入付款金额");
+                return
+            }
+
             if(window.android!=undefined){
                 //传递订单等参数...
-                window.android.alipay();
+                window.android.alipay(money);
             }
         }
+
+
+
 
 
 
@@ -72,24 +99,38 @@
 
 </head>
 <body>
-<div class="wrapper">
-    <img src="scan.png" id="scanButton" onclick="scan()"/>
-</div>
 
-<div class="desc">点击扫描</div>
+<!--<div class="wrapper">-->
+<!--<img src="scan.png" id="scanButton" onclick="scan()"/>-->
+<!--</div>-->
 
-<hr/>
+<!--<div class="desc">点击扫描</div>-->
+
+<!--<hr/>-->
 
 <center><h3>支付方式</h3></center>
+<div>
+    <input type="text" id="money" name="money" placeholder="请输入付款金额"/>
+</div>
 <div class="payments">
-    <!--<div id="wxpay" onclick="wxpay()">微信支付</div>-->
-    <!--<div id="alipay" onclick="alipay()">支付宝支付</div>-->
-    <a href="javascript:void(0)" onclick="wxpay()">
-        <div id="wxpay">微信支付</div>
-    </a>
-    <a href="javascript:void(0)" onclick="alipay()">
-        <div id="alipay">支付宝支付</div>
-    </a>
+
+    <ul>
+        <li>
+            <a href="javascript:void(0)">
+                <div id="balance">余额支付</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" onclick="wxpay()">
+                <div id="wxpay">微信支付</div>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0)" onclick="alipay()">
+                <div id="alipay">支付宝支付</div>
+            </a>
+        </li>
+    </ul>
 </div>
 
 </body>
