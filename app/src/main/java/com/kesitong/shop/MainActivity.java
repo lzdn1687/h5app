@@ -229,10 +229,13 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "微信支付，金额：" + money, Toast.LENGTH_SHORT).show();
         // TODO: 2017/9/21 请求支付接口，得到所需参数
         preWxpay(money);
+
+
     }
 
     /**
      * 调用微信发起支付
+     *
      * @param response
      */
     private void doWxpay(String response) {

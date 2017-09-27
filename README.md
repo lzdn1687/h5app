@@ -3,6 +3,10 @@
 
 ##聚惠和成
 
+注册邮箱
+cstshopping@163.com
+kst123456
+
 微信公众平台:
 cstkst@163.com          kst123456
 蚂蚁金服开放平台:
@@ -19,6 +23,6 @@ cstshopping@163.com      cst180809
 ###TODO
 支付接口
 
-1.微信支付
-appid 等待审核结果
-2.支付宝签约
+微信支付
+appid 申请微信支付
+
