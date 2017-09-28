@@ -17,15 +17,15 @@ android {
     }
     defaultConfig {
         //聚惠和成
-        applicationId "com.kesitong.shop2"
+        applicationId "com.kesitong.shop"
         //云南三农网
 //        applicationId "com.sannongwang.android"
         //易物乐
 //        applicationId "com.yiwule.android"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 20
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

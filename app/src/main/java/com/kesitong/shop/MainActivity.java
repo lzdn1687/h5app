@@ -49,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private ProgressBar pg1;
     public static final String TAG = "WebViewActivity";
-    public static final String URL1 = "http://qll.jiahetianlang.com/mobile/";
+    public static final String URL_QLL = "http://qll.jiahetianlang.com/mobile/";
 
     //聚会合成
-    public static final String URL2 = "http://www.cst01.com";
-    //    public static final String URL = "http://www.cst01.com/?temp=wap";
-    public static final String URL_BASE = "http://www.cst01.com/";
-    public static final String URL = "file:///android_asset/scan.html";
+//    public static final String URL = "http://www.cst01.com/";
+    public static final String URL = "http://jh.dzso.com/";
+//    public static final String URL = "file:///android_asset/scan.html";
 
     private TextView progress;
     public static final int REQUEST_SCAN_CODE = 0;
@@ -84,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
             //覆写shouldOverrideUrlLoading实现内部显示网页
             @Override
             public boolean shouldOverrideUrlLoading(final WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+//                view.loadUrl(url);
+//                return true;
+                //转原生支付
+                return payInterceptorWithUrl(url);
             }
         });
 
@@ -153,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
      * 说明传入的URL为支付宝支付URL，支付宝SDK已经成功拦截该URL，并转化为APP支付方式，商户容器无需再加载该URL；
      * 如果返回值为false，说明传入的URL并非支付宝支付URL，商户容器需要继续加载该URL；
      */
-    private boolean payInterceptorWithUrl(String url, final WebView view) {
+    private boolean payInterceptorWithUrl(String url) {
 
 
         if (!(url.startsWith("http") || url.startsWith("https"))) {
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            view.loadUrl(url);
+                            webView.loadUrl(url);
                         }
                     });
                 }
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
          * 若成功拦截，则无需继续加载该URL；否则继续加载
          */
         if (!isIntercepted)
-            view.loadUrl(url);
+            webView.loadUrl(url);
         return true;
     }
 
@@ -193,6 +194,12 @@ public class MainActivity extends AppCompatActivity {
     @JavascriptInterface
     public void scan(String token) {
         Log.d(TAG, "scan: token = " + token);//object
+        startScan();
+    }
+
+    //定义的方法
+    @JavascriptInterface
+    public void scan() {
         startScan();
     }
 
@@ -260,12 +267,12 @@ public class MainActivity extends AppCompatActivity {
 
     //支付宝支付
     @JavascriptInterface
-    public void alipay() {
+    public void alipay(String param) {
 //        Toast.makeText(this, "支付宝支付", Toast.LENGTH_SHORT).show();
         // TODO: 2017/9/21 支付宝支付接口
-        nativeAlipay();
+//        nativeAlipay();
 
-        //
+//        payInterceptorWithUrl(param);
     }
 
 
