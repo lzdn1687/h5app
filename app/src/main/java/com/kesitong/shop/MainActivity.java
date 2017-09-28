@@ -51,8 +51,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WebViewActivity";
     public static final String URL_QLL = "http://qll.jiahetianlang.com/mobile/";
 
-    //聚会合成
+    //聚会合成正式站
 //    public static final String URL = "http://www.cst01.com/";
+    //聚会合成测试站
     public static final String URL = "http://jh.dzso.com/";
 //    public static final String URL = "file:///android_asset/scan.html";
 
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(final WebView view, String url) {
 //                view.loadUrl(url);
 //                return true;
-                //转原生支付
+                //支付宝网页转原生支付，拦截器
                 return payInterceptorWithUrl(url);
             }
         });

@@ -2,12 +2,23 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
+
+        //仅聚惠和成app
         config {
             keyAlias '123456'
             keyPassword '123456'
-            storeFile file('F:/TianLang/jhhc/app/yuanfeng.jks')
+            //当前目录相对路径
+            storeFile file('yuanfeng.jks')
             storePassword '123456'
         }
+
+        //针对所有初次开发app签名
+//        config {
+//            keyAlias 'key'
+//            keyPassword '123456'
+//            storeFile file('keystore.jks')
+//            storePassword '123456'
+//        }
     }
     compileSdkVersion 21
     buildToolsVersion "25.0.0"
