@@ -44,7 +44,11 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
+
+        Log.e(TAG, "onPayFinish, errCode = " + resp.errCode);
+        Log.e(TAG, "onPayFinish, errStr = " + resp.errStr);
+        Log.e(TAG, "onPayFinish, transaction = " + resp.transaction);
+        Log.e(TAG, "onPayFinish, openId = " + resp.openId);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
@@ -54,6 +58,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
             } else if (resp.errCode == -2) {
                 Toast.makeText(this, "没有交易", Toast.LENGTH_SHORT).show();
             } else {
+//                Toast.makeText(this, resp.errCode, Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
             }
             finish();

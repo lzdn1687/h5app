@@ -34,6 +34,15 @@
             android:theme="@android:style/Theme.Translucent"
             android:windowSoftInputMode="stateHidden"/>
 
+        <!--微信支付
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="stateHidden"/>-->
+
         <!--支付宝支付-->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

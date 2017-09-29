@@ -16,5 +16,6 @@ public class Constants {
     public static final String ALIPAY_APP_ID = "2017041506737786";
 
     //微信支付接口
-    public static final String WX_PAY_URL = "www.cst01.com/pay/wxpay2/example/my.php";
+    public static final String WX_PAY_URL = "http://jh.dzso.com/wxpay.api.php?re=wxpay";
+//    public static final String WX_PAY_URL = "http://jh.dzso.com/pay/?m=payment&s=transfer&re=wxpay";
 }

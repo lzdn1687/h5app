@@ -210,33 +210,32 @@ public class MainActivity extends AppCompatActivity {
         return "android";
     }
 
-    private void preWxpay(String money) {
+
+    //微信支付
+    @JavascriptInterface
+    public void paywx(String money) {
+//        Toast.makeText(this, "微信支付", Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "paywx: money = " + money);
         OkHttpUtils
-                .post()
-                .url(Constants.WX_PAY_URL)
-                .addParams("money", money)
+                .get()
+//                .url(Constants.WX_PAY_URL)
+//                .addParams("money", money)
+                .url("http://jh.dzso.com/wxpay.api.php?re=wxpay&money=" + money)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        Log.d(TAG, "onError: e = " + e.getMessage());
+                        Log.e(TAG, "onError: e = " + e.getMessage());
+                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onResponse(String response, int i) {
-                        Log.d(TAG, "onResponse: response = " + response);
+                        Log.e(TAG, "onResponse: response = " + response);
+//                        Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
                         doWxpay(response);
                     }
                 });
-    }
-
-
-    //微信支付
-    @JavascriptInterface
-    public void wxpay(String money) {
-        Toast.makeText(this, "微信支付，金额：" + money, Toast.LENGTH_SHORT).show();
-        // TODO: 2017/9/21 请求支付接口，得到所需参数
-        preWxpay(money);
 
 
     }
@@ -256,7 +255,8 @@ public class MainActivity extends AppCompatActivity {
             req.prepayId = json.getString("prepayid");
             req.nonceStr = json.getString("noncestr");
             req.timeStamp = json.getString("timestamp");
-            req.packageValue = json.getString("package");
+//            req.packageValue = json.getString("package");
+            req.packageValue = "Sign=WXPay";
             req.sign = json.getString("sign");
             req.extData = "app data"; // optional
         } catch (JSONException e) {
