@@ -18,4 +18,11 @@ public class Constants {
     //微信支付接口
     public static final String WX_PAY_URL = "http://jh.dzso.com/wxpay.api.php?re=wxpay";
 //    public static final String WX_PAY_URL = "http://jh.dzso.com/pay/?m=payment&s=transfer&re=wxpay";
+
+    //支付成功
+    public static final String PAY_RECEIVER_ACTION_SUCCESS = "pay_receiver_action_success";
+    //支付失败
+    public static final String PAY_RECEIVER_ACTION_FAIL = "pay_receiver_action_fail";
+    //交易取消
+    public static final String PAY_RECEIVER_ACTION_CANCEL = "pay_receiver_action_cancel";
 }

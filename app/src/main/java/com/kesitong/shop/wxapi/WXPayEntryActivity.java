@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.kesitong.shop.util.Constants;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
@@ -13,8 +12,6 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-
-import static android.content.ContentValues.TAG;
 
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
@@ -42,6 +39,11 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onReq(BaseReq req) {
     }
 
+    public interface CallBack {
+        void onResp(String result);
+    }
+
+
     @Override
     public void onResp(BaseResp resp) {
 
@@ -53,13 +55,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             if (resp.errCode == 0) {
                 //支付成功
-                Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
-//				sendBroadcast(new Intent("successful"));
+//                Toast.makeText(this, "支付成功", Toast.LENGTH_SHORT).show();
+                sendBroadcast(new Intent(Constants.PAY_RECEIVER_ACTION_SUCCESS));
             } else if (resp.errCode == -2) {
-                Toast.makeText(this, "没有交易", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "没有交易", Toast.LENGTH_SHORT).show();
+                sendBroadcast(new Intent(Constants.PAY_RECEIVER_ACTION_CANCEL));
             } else {
 //                Toast.makeText(this, resp.errCode, Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "支付失败", Toast.LENGTH_SHORT).show();
+                sendBroadcast(new Intent(Constants.PAY_RECEIVER_ACTION_FAIL));
             }
             finish();
         }

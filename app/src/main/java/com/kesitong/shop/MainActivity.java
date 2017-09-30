@@ -1,7 +1,10 @@
 package com.kesitong.shop;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -54,14 +57,38 @@ public class MainActivity extends AppCompatActivity {
     //聚会合成正式站
 //    public static final String URL = "http://www.cst01.com/";
     //聚会合成测试站
-//    public static final String URL = "http://jh.dzso.com/";
-    public static final String URL = "file:///android_asset/scan.html";
+    public static final String URL = "http://jh.dzso.com/";
+//    public static final String URL = "file:///android_asset/scan.html";
 
     private TextView progress;
     public static final int REQUEST_SCAN_CODE = 0;
     public static final int REQUEST_CAMERA_PERMISSION = 10000;
 
     private IWXAPI api;
+
+    private BroadcastReceiver payReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String result = "0";
+            if (intent.getAction().equals(Constants.PAY_RECEIVER_ACTION_SUCCESS)) {
+                result = "1";
+            } else if (intent.getAction().equals(Constants.PAY_RECEIVER_ACTION_CANCEL)) {
+                result = "0";
+            } else if (intent.getAction().equals(Constants.PAY_RECEIVER_ACTION_FAIL)) {
+                result = "-1";
+            }
+
+            final String url = "javascript:result(" + result + ")";
+            Log.e(TAG, "支付结果 calback: url = " + url);
+            webView.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.loadUrl(url);
+                }
+            });
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +103,13 @@ public class MainActivity extends AppCompatActivity {
         webView.loadUrl(URL);
 
         api = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID);
+
+        //注册支付广播接收器
+        registerReceiver(payReceiver, new IntentFilter(Constants.PAY_RECEIVER_ACTION_SUCCESS));
+        registerReceiver(payReceiver, new IntentFilter(Constants.PAY_RECEIVER_ACTION_FAIL));
+        registerReceiver(payReceiver, new IntentFilter(Constants.PAY_RECEIVER_ACTION_CANCEL));
     }
+
 
     private void initSettings() {
 
@@ -156,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
      * 如果返回值为false，说明传入的URL并非支付宝支付URL，商户容器需要继续加载该URL；
      */
     private boolean payInterceptorWithUrl(String url) {
-
 
         if (!(url.startsWith("http") || url.startsWith("https"))) {
             return true;
@@ -272,14 +304,17 @@ public class MainActivity extends AppCompatActivity {
 //        Toast.makeText(this, "支付宝支付", Toast.LENGTH_SHORT).show();
         // TODO: 2017/9/21 支付宝支付接口
 //        nativeAlipay();
-        final String url = "javascript:callbackForAndroid(" + money + ")";
-        Log.e(TAG, "alipay calback: url = " + url);
-        webView.post(new Runnable() {
-            @Override
-            public void run() {
-                webView.loadUrl(url);
-            }
-        });
+//        final String url = "javascript:callbackForAndroid(" + money + ")";
+//        Log.e(TAG, "alipay calback: url = " + url);
+//        webView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                webView.loadUrl(url);
+//            }
+//        });
+
+//        sendBroadcast(new Intent(Constants.PAY_RECEIVER_ACTION_SUCCESS));
+//        sendBroadcast(new Intent(Constants.PAY_RECEIVER_ACTION_FAIL));
     }
 
 
