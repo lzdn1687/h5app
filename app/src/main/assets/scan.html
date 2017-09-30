@@ -40,6 +40,7 @@
     	    margin:10px;
     	}
 
+
     </style>
     <script type="text/javascript">
         //扫描方法
@@ -61,7 +62,7 @@
             }
             if(window.android!=undefined){
                 //传递订单等参数...
-                window.android.wxpay(money);
+                window.android.paywx(money);
             }
         }
 
@@ -80,13 +81,19 @@
             }
         }
 
+        //定义安卓的回调
+        function callbackForAndroid(money){
+            alert(money);
+        }
+
+
     </script>
 
 </head>
 <body>
 
 <div class="wrapper">
-<img src="scan.png" id="scanButton" onclick="scan()"/>
+    <img src="scan.png" id="scanButton" onclick="scan()"/>
 </div>
 
 <div class="desc">点击扫描</div>

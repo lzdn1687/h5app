@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
     //聚会合成正式站
 //    public static final String URL = "http://www.cst01.com/";
     //聚会合成测试站
-    public static final String URL = "http://jh.dzso.com/";
-//    public static final String URL = "file:///android_asset/scan.html";
+//    public static final String URL = "http://jh.dzso.com/";
+    public static final String URL = "file:///android_asset/scan.html";
 
     private TextView progress;
     public static final int REQUEST_SCAN_CODE = 0;
@@ -268,12 +268,18 @@ public class MainActivity extends AppCompatActivity {
 
     //支付宝支付
     @JavascriptInterface
-    public void alipay(String param) {
+    public void alipay(String money) {
 //        Toast.makeText(this, "支付宝支付", Toast.LENGTH_SHORT).show();
         // TODO: 2017/9/21 支付宝支付接口
 //        nativeAlipay();
-
-//        payInterceptorWithUrl(param);
+        final String url = "javascript:callbackForAndroid(" + money + ")";
+        Log.e(TAG, "alipay calback: url = " + url);
+        webView.post(new Runnable() {
+            @Override
+            public void run() {
+                webView.loadUrl(url);
+            }
+        });
     }
 
 

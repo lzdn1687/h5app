@@ -20,7 +20,7 @@ android {
 //            storePassword '123456'
 //        }
     }
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "25.0.0"
     aaptOptions {
         cruncherEnabled false
@@ -34,7 +34,7 @@ android {
         //易物乐
 //        applicationId "com.yiwule.android"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 20
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
