@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
     //聚会合成正式站
 //    public static final String URL = "http://www.cst01.com/";
     //聚会合成测试站
-    public static final String URL = "http://jh.dzso.com/";
+    public static final String URL = "http://fry.dzso.com/mobile/index.php";//房如意
+//    public static final String URL = "http://jh.dzso.com/";
 //    public static final String URL = "file:///android_asset/scan.html";
 
     private TextView progress;
