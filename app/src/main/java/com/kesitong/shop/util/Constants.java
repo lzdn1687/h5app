@@ -10,14 +10,16 @@ package com.kesitong.shop.util;
  */
 public class Constants {
     //微信APP_ID
-    public static final String WX_APP_ID = "wxe26e08c4e9d46c4c";
+    public static final String WX_APP_ID = "wxe26e08c4e9d46c4c";//聚惠和成
 
     //支付宝APP_ID
     public static final String ALIPAY_APP_ID = "2017041506737786";
 
+    //团乐美
+    public static final String HOST = "http://www.hntuanle.com";
+
     //微信支付接口
-    public static final String WX_PAY_URL = "http://jh.dzso.com/wxpay.api.php?re=wxpay";
-//    public static final String WX_PAY_URL = "http://jh.dzso.com/pay/?m=payment&s=transfer&re=wxpay";
+    public static final String WX_PAY_URL = HOST + "/wxpay.api.php?re=wxpay";
 
     //支付成功
     public static final String PAY_RECEIVER_ACTION_SUCCESS = "pay_receiver_action_success";

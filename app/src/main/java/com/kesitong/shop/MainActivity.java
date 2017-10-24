@@ -54,12 +54,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "WebViewActivity";
     public static final String URL_QLL = "http://qll.jiahetianlang.com/mobile/";
 
-    //聚会合成正式站
+    //聚惠和成正式站
 //    public static final String URL = "http://www.cst01.com/";
-    //聚会合成测试站
-    public static final String URL = "http://fry.dzso.com/mobile/index.php";//房如意
+    //聚惠和成测试站
 //    public static final String URL = "http://jh.dzso.com/";
 //    public static final String URL = "file:///android_asset/scan.html";
+//    public static final String URL = "http://fry.dzso.com/mobile/index.php";//房如意
+    public static final String URL = "http://www.hntuanle.com";//团乐美
 
     private TextView progress;
     public static final int REQUEST_SCAN_CODE = 0;
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 .get()
 //                .url(Constants.WX_PAY_URL)
 //                .addParams("money", money)
-                .url("http://jh.dzso.com/wxpay.api.php?re=wxpay&money=" + money)
+                .url(URL + "/wxpay.api.php?re=wxpay&money=" + money)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -411,8 +412,8 @@ public class MainActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //若位于首页
             String url = webView.getUrl();
-            Log.d(TAG, "onKeyDown: url = " + url);
-            if (url.equals(URL)) {
+            Log.e(TAG, "onKeyDown: url = " + url);
+            if (url.equals(URL) || url.equals(URL + "/")) {
                 if (System.currentTimeMillis() - time < 3000) {
                     finish();
                     android.os.Process.killProcess(android.os.Process.myPid());
