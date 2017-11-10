@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--云南三农网-->
-    <color name="ynsnw">#1E90FF</color>
-
-
-    <color name="colorPrimary">#FC5600</color>
-    <color name="colorPrimaryDark">#FC5600</color>
-    <color name="colorAccent">#FC5600</color>
     <!--聚惠和成-->
     <color name="jhhc">#FC5600</color>
     <color name="jhhc_lt">#f7e1c0</color>
+
+    <!--云南三农网-->
+    <color name="ynsnw">#1E90FF</color>
+    <!--金砖彩票-->
+    <color name="jzcp">#d31929</color>
+
+    <!--亲来了商家后台-->
+    <color name="qll">#358EE0</color>
+
+
+    <color name="colorPrimary">@color/qll</color>
+    <color name="colorPrimaryDark">@color/qll</color>
+    <color name="colorAccent">@color/qll</color>
 
 </resources>

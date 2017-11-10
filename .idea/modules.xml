@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/h5app.iml" filepath="$PROJECT_DIR$/h5app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jhhc.iml" filepath="$PROJECT_DIR$/jhhc.iml" />
       <module fileurl="file://$PROJECT_DIR$/libzxing/libzxing.iml" filepath="$PROJECT_DIR$/libzxing/libzxing.iml" />
       <module fileurl="file://$PROJECT_DIR$/yiwule.iml" filepath="$PROJECT_DIR$/yiwule.iml" />
     </modules>

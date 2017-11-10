@@ -3,23 +3,15 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
 
-        //仅聚惠和成app
+        //开发app签名
         config {
-            keyAlias '123456'
+            keyAlias 'key'
             keyPassword '123456'
-            //当前目录相对路径
-            storeFile file('yuanfeng.jks')
+            storeFile file('keystore.jks')
             storePassword '123456'
         }
-
-        //针对所有初次开发app签名
-//        config {
-//            keyAlias 'key'
-//            keyPassword '123456'
-//            storeFile file('keystore.jks')
-//            storePassword '123456'
-//        }
     }
+
     compileSdkVersion 22
     buildToolsVersion "25.0.0"
     aaptOptions {
@@ -27,16 +19,17 @@ android {
         useNewCruncher false
     }
     defaultConfig {
-        //聚惠和成
-        applicationId "com.kesitong.shop"
+        applicationId "com.qinlaile.sys"
+        //金砖彩票
+//        applicationId "com.jinzhuan.lottery"
         //云南三农网
 //        applicationId "com.sannongwang.android"
         //易物乐
 //        applicationId "com.yiwule.android"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20
-        versionName "2.0"
+        versionCode 10
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -43,31 +45,38 @@ import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    //    public static final String URL = "file:///android_asset/scan.html";
+
+    //房如意
+//    public static final String URL = "http://fry.dzso.com/mobile/index.php";
+
+    //金砖彩票
+//    public static final String URL = "http://cpm.dzso.com/";
+//    public static final String URL = "http://m.jinzhuan1688.com/";
+
+    //    public static final String URL = "http://qll.jiahetianlang.com/Shop/login.html";
+    public static final String URL = "http://qll.jiahetianlang.com/shopWap/login.html?";
+
     //易物乐
 //    public static final String URL = "http://yiman976.com";
 
     //云南三农网
 //    public static final String URL = "http://www.ynsnw.com/mobile";
 
-    private WebView webView;
+    //    private WebView webView;
     private ProgressBar pg1;
-    public static final String TAG = "WebViewActivity";
-    public static final String URL_QLL = "http://qll.jiahetianlang.com/mobile/";
-
-    //聚惠和成正式站
-//    public static final String URL = "http://www.cst01.com/";
-    //聚惠和成测试站
-//    public static final String URL = "http://jh.dzso.com/";
-//    public static final String URL = "file:///android_asset/scan.html";
-//    public static final String URL = "http://fry.dzso.com/mobile/index.php";//房如意
-    public static final String URL = "http://www.hntuanle.com";//团乐美
-
     private TextView progress;
+
+    private WebView webView;
+//    private SwipeRefreshLayout swipeRefreshLayout;
+
+    public static final String TAG = "MainActivity";
     public static final int REQUEST_SCAN_CODE = 0;
+
     public static final int REQUEST_CAMERA_PERMISSION = 10000;
 
     private IWXAPI api;
-
     private BroadcastReceiver payReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -99,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
         webView = (WebView) findViewById(R.id.wv);
         pg1 = (ProgressBar) findViewById(R.id.progressBar1);
         progress = (TextView) findViewById(R.id.progress);
+//
+//        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                webView.reload();
+//            }
+//        });
 
         initSettings();
         webView.addJavascriptInterface(this, "android");
@@ -114,6 +131,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initSettings() {
+//        webView.setOnScrollChangeListener(new ScrollWebView.OnScrollChangeListener() {
+//
+//            @Override
+//            public void onPageTop(boolean top) {
+//                Log.d(TAG, "onPageTop: top = " + top);
+//                //顶端启用，其他禁用
+//                if (!swipeRefreshLayout.isEnabled() && top) {
+//                    swipeRefreshLayout.setEnabled(true);
+//                    Log.d(TAG, "onPageTop: 启用 ");
+//                }
+//
+//                if (swipeRefreshLayout.isEnabled() && !top) {
+//                    swipeRefreshLayout.setEnabled(false);
+//                    Log.d(TAG, "onPageTop: 禁用 ");
+//                }
+//            }
+//        });
 
         webView.setWebViewClient(new WebViewClient() {
             //覆写shouldOverrideUrlLoading实现内部显示网页
@@ -123,6 +157,15 @@ public class MainActivity extends AppCompatActivity {
 //                return true;
                 //支付宝网页转原生支付，拦截器
                 return payInterceptorWithUrl(url);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                CookieManager cookieManager = CookieManager.getInstance();
+                String cookieStr = cookieManager.getCookie(url);
+                //PHPSESSID=qqpe8sre93hl162bfnn57qs4u8p2e63q
+                Log.d(TAG, "onPageFinished: cookieStr = " + cookieStr);
             }
         });
 
@@ -134,7 +177,12 @@ public class MainActivity extends AppCompatActivity {
                 if (newProgress == 100) {
                     pg1.setVisibility(View.GONE);//加载完网页进度条消失
                     progress.setVisibility(View.GONE);//加载完网页进度条消失
+//                    if (swipeRefreshLayout.isRefreshing()) {
+//                        swipeRefreshLayout.setRefreshing(false);
+//                    }
                 } else {
+//                    if (!swipeRefreshLayout.isRefreshing())
+//                        swipeRefreshLayout.setRefreshing(true);
                     pg1.setVisibility(View.VISIBLE);//开始加载网页时显示进度条
                     progress.setVisibility(View.VISIBLE);//开始加载网页时显示进度条
                     progress.setText(newProgress + "%");//设置进度值
@@ -225,17 +273,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //定义的方法
+    //传入shopid
     @JavascriptInterface
-    public void scan(String token) {
-        Log.d(TAG, "scan: token = " + token);//object
+    public void scan(String shopid) {
+//        Toast.makeText(this, "shopid = " + shopid, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "scan: shopid = " + shopid);//object
+        this.shopid = shopid;
         startScan();
+//        test();
     }
 
     //定义的方法
     @JavascriptInterface
     public void scan() {
         startScan();
+    }
+
+    //定义跳转QQ的方法
+    @JavascriptInterface
+    public void clickOnAndroid() {
+//        Toast.makeText(this, "clickOnAndroid", Toast.LENGTH_SHORT).show();
+        final String qqUrl = "mqqwpa://im/chat?chat_type=wpa&uin=707004446&version=1";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qqUrl)));
+    }
+
+    //定义跳转QQ的方法（底部广告）
+    @JavascriptInterface
+    public void clickOnAndroid2() {
+//        Toast.makeText(this, "clickOnAndroid", Toast.LENGTH_SHORT).show();
+        final String qqUrl = "mqqwpa://im/chat?chat_type=wpa&uin=3214677108&version=1";
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(qqUrl)));
     }
 
     //获取客户端类型的方法
@@ -254,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 .get()
 //                .url(Constants.WX_PAY_URL)
 //                .addParams("money", money)
-                .url(URL + "/wxpay.api.php?re=wxpay&money=" + money)
+                .url(URL + "wxpay.api.php?re=wxpay&money=" + money)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -387,6 +454,8 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(openCameraIntent, REQUEST_SCAN_CODE);
     }
 
+    //店铺id
+    private String shopid;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -397,9 +466,81 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = data.getExtras();
         String scanResult = bundle.getString("result");
         Log.d(TAG, "onActivityResult: scanResult = " + scanResult);
+//        弹出测试
+//        Toast.makeText(this, scanResult, Toast.LENGTH_SHORT).show();
 
-        if (scanResult != null) {
-            webView.loadUrl(scanResult);
+        if (!TextUtils.isEmpty(scanResult) && scanResult.startsWith("http")) {
+            requestOrderStatus(scanResult);
+        } else {
+            Toast.makeText(this, "二维码识别错误", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 亲来了后台扫码，修改订单状态
+     *
+     * @param scanResult
+     */
+    private void requestOrderStatus(String scanResult) {
+        //字符串截取得到url
+        int index = scanResult.lastIndexOf("?");
+        String url = scanResult.substring(0, index);
+        Log.d(TAG, "testString: url = " + url);
+//        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
+
+//        String url = "http://qll.jiahetianlang.com/App/goodsQrCode.html?act=setOrderStatus";
+//        String scanResult = "http://qll.jiahetianlang.com/App/goodsQrCde.html?act=setOrderStatus&orderid=11099";
+
+        //字符串截取得到orderid
+        int index2 = scanResult.lastIndexOf("=") + 1;
+        String orderid = scanResult.substring(index2, scanResult.length());
+//        Toast.makeText(this, "orderid:" + orderid + "\n" + url, Toast.LENGTH_SHORT).show();
+        OkHttpUtils
+                .post()
+                .url(url)
+                .addParams("act", "setOrderStatus")
+                .addParams("shopid", shopid)
+                .addParams("orderid", orderid)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+//                        Toast.makeText(MainActivity.this, "[error]->" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        Log.d(TAG, "onResponse: s = " + s);
+//                        Toast.makeText(MainActivity.this, "[success]->" + s, Toast.LENGTH_SHORT).show();
+                        if (!TextUtils.isEmpty(s)) {
+                            process(s);
+                        } else {
+                            Toast.makeText(MainActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+
+    /**
+     * 处理响应结果
+     *
+     * @param s
+     */
+    private void process(String s) {
+        try {
+            //{"code":200,"orderid":"11099","shopid":"291"}
+            JSONObject jsonObject = new JSONObject(s);
+            int code = jsonObject.getInt("code");
+            if (200 == code) {
+                Toast.makeText(MainActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                webView.reload();
+            } else {
+                Toast.makeText(MainActivity.this, "操作失败", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -413,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
             //若位于首页
             String url = webView.getUrl();
             Log.e(TAG, "onKeyDown: url = " + url);
-            if (url.equals(URL) || url.equals(URL + "/")) {
+            if (url.equals(URL)) {
                 if (System.currentTimeMillis() - time < 3000) {
                     finish();
                     android.os.Process.killProcess(android.os.Process.myPid());
